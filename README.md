@@ -81,7 +81,7 @@ void clear() => ThemeManager.of(context).clearBrightnessPreference();
 ```
 
 ### A dialog widget to change the brightness!
-![](https://github.com/matthewrice345/theme_manager/blob/master/assets/dialog.png)
+<img src="https://github.com/matthewrice345/theme_manager/blob/master/assets/dialog.png" width="225">
 
 ## Getting Started
 
