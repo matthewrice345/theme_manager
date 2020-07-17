@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 class ThemePickerDialog extends StatelessWidget {
-  const ThemePickerDialog({Key key, this.onSelectedTheme})
-      : super(key: key);
+  const ThemePickerDialog({Key key, this.onSelectedTheme}) : super(key: key);
 
   final ValueChanged<BrightnessPreference> onSelectedTheme;
 

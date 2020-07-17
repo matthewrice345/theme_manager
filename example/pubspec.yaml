@@ -1,5 +1,5 @@
 name: example
-description: A theme manager for light, dark, and system themes.
+description: A theme manager for light, dark, and system themes. Change the theme dynamically and the selected theme will be persisted.
 version: 1.0.0
 homepage: https://github.com/matthewrice345/theme_manager
 

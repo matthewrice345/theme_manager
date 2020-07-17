@@ -51,18 +51,21 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               RaisedButton(
-                onPressed: () => ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.system),
+                onPressed: () => ThemeManager.of(context)
+                    .setBrightnessPreference(BrightnessPreference.system),
                 child: const Text('System'),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 child: RaisedButton(
-                  onPressed: () => ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.light),
+                  onPressed: () => ThemeManager.of(context)
+                      .setBrightnessPreference(BrightnessPreference.light),
                   child: const Text('Light'),
                 ),
               ),
               RaisedButton(
-                onPressed: () => ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.dark),
+                onPressed: () => ThemeManager.of(context)
+                    .setBrightnessPreference(BrightnessPreference.dark),
                 child: const Text('Dark'),
               ),
             ],

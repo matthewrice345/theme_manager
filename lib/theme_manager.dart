@@ -45,7 +45,6 @@ class ThemeManager extends StatefulWidget {
 }
 
 class ThemeManagerState extends State<ThemeManager> {
-
   bool _shouldLoadBrightness;
 
   static const String _sharedPreferencesKey = 'brightnessPreference';
@@ -75,9 +74,9 @@ class ThemeManagerState extends State<ThemeManager> {
       return;
     }
     _brightnessPreference = await _getBrightnessPreference();
-    if(brightnessPreference == BrightnessPreference.dark) {
+    if (brightnessPreference == BrightnessPreference.dark) {
       _brightness = Brightness.dark;
-    } else if(brightnessPreference == BrightnessPreference.light) {
+    } else if (brightnessPreference == BrightnessPreference.light) {
       _brightness = Brightness.light;
     } else {
       _brightness = WidgetsBinding.instance.window.platformBrightness;
@@ -110,7 +109,8 @@ class ThemeManagerState extends State<ThemeManager> {
 
   /// Sets the new brightness
   /// Rebuilds the tree
-  Future<void> _setBrightness(Brightness brightness, BrightnessPreference preference) async {
+  Future<void> _setBrightness(
+      Brightness brightness, BrightnessPreference preference) async {
     // Update state with new values
     setState(() {
       _themeData = widget.data(brightness);
@@ -121,7 +121,7 @@ class ThemeManagerState extends State<ThemeManager> {
 
   /// Toggles the brightness from dark to light
   Future<void> setBrightnessPreference(BrightnessPreference preference) async {
-    switch(preference) {
+    switch (preference) {
       case BrightnessPreference.light:
         await _setBrightness(Brightness.light, preference);
         break;
@@ -129,7 +129,8 @@ class ThemeManagerState extends State<ThemeManager> {
         await _setBrightness(Brightness.dark, preference);
         break;
       default:
-        await _setBrightness(WidgetsBinding.instance.window.platformBrightness, preference);
+        await _setBrightness(
+            WidgetsBinding.instance.window.platformBrightness, preference);
         break;
     }
 
@@ -151,7 +152,7 @@ class ThemeManagerState extends State<ThemeManager> {
       return;
     }
     int saveState = 0;
-    switch(preference) {
+    switch (preference) {
       case BrightnessPreference.light:
         saveState = 1;
         break;
@@ -173,10 +174,13 @@ class ThemeManagerState extends State<ThemeManager> {
     // Gets the bool stored in prefs
     // Or returns whether or not the `defaultBrightness` is dark
     final int savedState = prefs.getInt(_sharedPreferencesKey) ?? 0;
-    switch(savedState) {
-      case 1: return BrightnessPreference.light;
-      case 2: return BrightnessPreference.dark;
-      default: return BrightnessPreference.system;
+    switch (savedState) {
+      case 1:
+        return BrightnessPreference.light;
+      case 2:
+        return BrightnessPreference.dark;
+      default:
+        return BrightnessPreference.system;
     }
   }
 

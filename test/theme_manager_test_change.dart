@@ -72,19 +72,22 @@ class ButtonPage extends StatelessWidget {
       children: [
         RaisedButton(
           onPressed: () {
-            ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.light);
+            ThemeManager.of(context)
+                .setBrightnessPreference(BrightnessPreference.light);
           },
           key: lightButtonKey,
         ),
         RaisedButton(
           onPressed: () {
-            ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.dark);
+            ThemeManager.of(context)
+                .setBrightnessPreference(BrightnessPreference.dark);
           },
           key: darkButtonKey,
         ),
         RaisedButton(
           onPressed: () {
-            ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.system);
+            ThemeManager.of(context)
+                .setBrightnessPreference(BrightnessPreference.system);
           },
           key: systemButtonKey,
         ),
