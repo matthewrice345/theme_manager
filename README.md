@@ -63,9 +63,12 @@ class MyApp extends StatelessWidget {
 When you want to change your theme:
 
 ```dart
-void setAsSystemDefault() => ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.system);
-void setAsLight() => ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.light);
-void setAsDark() => ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.dark);
+void setAsSystemDefault() => 
+  ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.system);
+void setAsLight() => 
+  ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.light);
+void setAsDark() => 
+  ThemeManager.of(context).setBrightnessPreference(BrightnessPreference.dark);
 ```
 
 The system default will load either light or dark based on the device preferences. If your device
