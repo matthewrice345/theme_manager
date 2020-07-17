@@ -1,7 +1,6 @@
 name: example
 description: A theme manager for light, dark, and system themes.
 version: 1.0.0
-author: Matthew Rice
 homepage: https://github.com/matthewrice345/theme_manager
 
 environment:
