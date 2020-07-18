@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ThemeManager(
         key: themeManagerKey,
-        defaultBrightness: Brightness.light,
+        defaultBrightnessPreference: BrightnessPreference.light,
         data: (Brightness brightness) {
           return ThemeData(
             primarySwatch: Colors.blue,

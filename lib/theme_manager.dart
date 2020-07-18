@@ -16,7 +16,7 @@ class ThemeManager extends StatefulWidget {
     Key key,
     this.data,
     this.themedWidgetBuilder,
-    this.defaultBrightness = Brightness.light,
+    this.defaultBrightnessPreference = BrightnessPreference.system,
     this.loadBrightnessOnStart = true,
   }) : super(key: key);
 
@@ -26,10 +26,10 @@ class ThemeManager extends StatefulWidget {
   /// Callback that returns the latest brightness
   final ThemeDataWithBrightnessBuilder data;
 
-  /// The default brightness on start
+  /// The default brightness preference on start
   ///
-  /// Defaults to `Brightness.light`
-  final Brightness defaultBrightness;
+  /// Defaults to `BrightnessPreference.system`
+  final BrightnessPreference defaultBrightnessPreference;
 
   /// Whether or not to load the brightness on start
   ///
@@ -74,13 +74,7 @@ class ThemeManagerState extends State<ThemeManager> {
       return;
     }
     _brightnessPreference = await _getBrightnessPreference();
-    if (brightnessPreference == BrightnessPreference.dark) {
-      _brightness = Brightness.dark;
-    } else if (brightnessPreference == BrightnessPreference.light) {
-      _brightness = Brightness.light;
-    } else {
-      _brightness = WidgetsBinding.instance.window.platformBrightness;
-    }
+    _brightness = _getBrightnessFromBrightnessPreference(brightnessPreference);
     _themeData = widget.data(_brightness);
     if (mounted) {
       setState(() {});
@@ -89,8 +83,8 @@ class ThemeManagerState extends State<ThemeManager> {
 
   /// Initializes the variables
   void _initVariables() {
-    _brightnessPreference = BrightnessPreference.system;
-    _brightness = widget.defaultBrightness;
+    _brightnessPreference = widget.defaultBrightnessPreference;
+    _brightness = _getBrightnessFromBrightnessPreference(brightnessPreference);
     _themeData = widget.data(_brightness);
     _shouldLoadBrightness = widget.loadBrightnessOnStart;
   }
@@ -113,27 +107,15 @@ class ThemeManagerState extends State<ThemeManager> {
       Brightness brightness, BrightnessPreference preference) async {
     // Update state with new values
     setState(() {
-      _themeData = widget.data(brightness);
       _brightness = brightness;
       _brightnessPreference = preference;
+      _themeData = widget.data(brightness);
     });
   }
 
   /// Toggles the brightness from dark to light
   Future<void> setBrightnessPreference(BrightnessPreference preference) async {
-    switch (preference) {
-      case BrightnessPreference.light:
-        await _setBrightness(Brightness.light, preference);
-        break;
-      case BrightnessPreference.dark:
-        await _setBrightness(Brightness.dark, preference);
-        break;
-      default:
-        await _setBrightness(
-            WidgetsBinding.instance.window.platformBrightness, preference);
-        break;
-    }
-
+    _setBrightness(_getBrightnessFromBrightnessPreference(preference), preference);
     // Save the brightness preference
     await _saveBrightness(preference);
   }
@@ -181,6 +163,16 @@ class ThemeManagerState extends State<ThemeManager> {
         return BrightnessPreference.dark;
       default:
         return BrightnessPreference.system;
+    }
+  }
+
+  Brightness _getBrightnessFromBrightnessPreference(BrightnessPreference preference) {
+    if (preference == BrightnessPreference.dark) {
+      return Brightness.dark;
+    } else if (preference == BrightnessPreference.light) {
+      return Brightness.light;
+    } else {
+      return WidgetsBinding.instance.window.platformBrightness;
     }
   }
 

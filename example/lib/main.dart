@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return ThemeManager(
       /// WidgetsBinding.instance.window.platformBrightness is used because a
       /// Material BuildContext will not be available outside of the Material app
-      defaultBrightness: WidgetsBinding.instance.window.platformBrightness,
+      defaultBrightnessPreference: BrightnessPreference.system,
       data: (Brightness brightness) => ThemeData(
         primarySwatch: Colors.blue,
         accentColor: Colors.lightBlue,

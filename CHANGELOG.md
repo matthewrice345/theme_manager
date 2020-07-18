@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## 1.0.3
+* Uses enum for initial theme preference.
+
 ## 1.0.2
 * Code cleanup.
 

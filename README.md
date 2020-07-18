@@ -10,7 +10,7 @@ A theme manager that supports light, dark, and system default themes. State is r
 Add `theme_manager` to your project.
 ```
   dependencies:
-    theme_manager: ^1.0.0
+    theme_manager: ^1.0.3
 ```
 
 run `flutter packages get` and import `theme_manager`
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeManager(
-      defaultBrightness: Brightness.light,
+      defaultBrightnessPreference: BrightnessPreference.system,
       data: (Brightness brightness) => ThemeData(
         primarySwatch: Colors.blue,
         accentColor: Colors.lightBlue,
@@ -81,7 +81,7 @@ void clear() => ThemeManager.of(context).clearBrightnessPreference();
 ```
 
 ### A dialog widget to change the brightness!
-<img src="https://github.com/matthewrice345/theme_manager/blob/master/assets/dialog.png" width="225">
+![](https://github.com/matthewrice345/theme_manager/blob/master/assets/dialog.png)
 
 ## Getting Started
 
