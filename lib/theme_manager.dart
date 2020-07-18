@@ -115,7 +115,8 @@ class ThemeManagerState extends State<ThemeManager> {
 
   /// Toggles the brightness from dark to light
   Future<void> setBrightnessPreference(BrightnessPreference preference) async {
-    _setBrightness(_getBrightnessFromBrightnessPreference(preference), preference);
+    _setBrightness(
+        _getBrightnessFromBrightnessPreference(preference), preference);
     // Save the brightness preference
     await _saveBrightness(preference);
   }
@@ -166,7 +167,8 @@ class ThemeManagerState extends State<ThemeManager> {
     }
   }
 
-  Brightness _getBrightnessFromBrightnessPreference(BrightnessPreference preference) {
+  Brightness _getBrightnessFromBrightnessPreference(
+      BrightnessPreference preference) {
     if (preference == BrightnessPreference.dark) {
       return Brightness.dark;
     } else if (preference == BrightnessPreference.light) {
