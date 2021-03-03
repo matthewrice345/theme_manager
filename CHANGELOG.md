@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## 1.1.0
+* Null-Safety support.
+
 ## 1.0.3 - 1.0.4
 * Uses enum for initial theme preference.
 * Formatting fixes.

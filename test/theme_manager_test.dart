@@ -5,7 +5,7 @@ import 'package:theme_manager/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 ValueKey<String> key = const ValueKey<String>('themeManagerKey');
-ThemeManagerState state;
+ThemeManagerState? state;
 GlobalKey<ThemeManagerState> themeManagerKey = GlobalKey<ThemeManagerState>();
 
 void main() {
@@ -47,7 +47,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
+      child: Text(''),
       onPressed: () {
         state = ThemeManager.of(context);
       },

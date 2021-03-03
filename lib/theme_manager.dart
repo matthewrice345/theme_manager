@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
+enum BrightnessPreference { system, light, dark }
+
 typedef ThemedWidgetBuilder = Widget Function(
     BuildContext context, ThemeData data);
 
@@ -13,9 +15,9 @@ typedef ThemeDataWithBrightnessBuilder = ThemeData Function(
 
 class ThemeManager extends StatefulWidget {
   const ThemeManager({
-    Key key,
-    this.data,
-    this.themedWidgetBuilder,
+    Key? key,
+    required this.data,
+    required this.themedWidgetBuilder,
     this.defaultBrightnessPreference = BrightnessPreference.system,
     this.loadBrightnessOnStart = true,
   }) : super(key: key);
@@ -40,26 +42,26 @@ class ThemeManager extends StatefulWidget {
   ThemeManagerState createState() => ThemeManagerState();
 
   static ThemeManagerState of(BuildContext context) {
-    return context.findAncestorStateOfType<State<ThemeManager>>();
+    return context.findAncestorStateOfType<State<ThemeManager>>() as ThemeManagerState;
   }
 }
 
 class ThemeManagerState extends State<ThemeManager> {
-  bool _shouldLoadBrightness;
+  bool? _shouldLoadBrightness;
 
   static const String _sharedPreferencesKey = 'brightnessPreference';
 
   /// Get the current `ThemeData`
   ThemeData get themeData => _themeData;
-  ThemeData _themeData;
+  late ThemeData _themeData;
 
   /// Get the current `Brightness`
   Brightness get brightness => _brightness;
-  Brightness _brightness;
+  late Brightness _brightness;
 
   /// Get the current `BrightnessPreference`
   BrightnessPreference get brightnessPreference => _brightnessPreference;
-  BrightnessPreference _brightnessPreference;
+  late BrightnessPreference _brightnessPreference;
 
   @override
   void initState() {
@@ -70,7 +72,7 @@ class ThemeManagerState extends State<ThemeManager> {
 
   /// Loads the brightness depending on the `loadBrightnessOnStart` value
   Future<void> _loadBrightness() async {
-    if (!_shouldLoadBrightness) {
+    if (_shouldLoadBrightness == null || !_shouldLoadBrightness!) {
       return;
     }
     _brightnessPreference = await _getBrightnessPreference();
@@ -131,7 +133,7 @@ class ThemeManagerState extends State<ThemeManager> {
   /// Saves the provided brightness in `SharedPreferences`
   Future<void> _saveBrightness(BrightnessPreference preference) async {
     /// Doesn't save the brightness if you don't want to load it
-    if (!_shouldLoadBrightness) {
+    if (_shouldLoadBrightness != null && !_shouldLoadBrightness!) {
       return;
     }
     int saveState = 0;
@@ -174,7 +176,7 @@ class ThemeManagerState extends State<ThemeManager> {
     } else if (preference == BrightnessPreference.light) {
       return Brightness.light;
     } else {
-      return WidgetsBinding.instance.window.platformBrightness;
+      return WidgetsBinding.instance?.window.platformBrightness ?? Brightness.light;
     }
   }
 
@@ -189,5 +191,3 @@ class ThemeManagerState extends State<ThemeManager> {
     return widget.themedWidgetBuilder(context, _themeData);
   }
 }
-
-enum BrightnessPreference { system, light, dark }

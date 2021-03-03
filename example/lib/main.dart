@@ -50,20 +50,20 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () => ThemeManager.of(context)
                     .setBrightnessPreference(BrightnessPreference.system),
                 child: const Text('System'),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () => ThemeManager.of(context)
                       .setBrightnessPreference(BrightnessPreference.light),
                   child: const Text('Light'),
                 ),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () => ThemeManager.of(context)
                     .setBrightnessPreference(BrightnessPreference.dark),
                 child: const Text('Dark'),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 class ThemePickerDialog extends StatelessWidget {
-  const ThemePickerDialog({Key key, this.onSelectedTheme}) : super(key: key);
+  const ThemePickerDialog({Key? key, required this.onSelectedTheme}) : super(key: key);
 
   final ValueChanged<BrightnessPreference> onSelectedTheme;
 
@@ -15,8 +15,8 @@ class ThemePickerDialog extends StatelessWidget {
           activeColor: ThemeManager.of(context).themeData.accentColor,
           value: BrightnessPreference.system,
           groupValue: ThemeManager.of(context).brightnessPreference,
-          onChanged: (BrightnessPreference value) {
-            onSelectedTheme(BrightnessPreference.system);
+          onChanged: (_) {
+            onSelectedTheme.call(BrightnessPreference.system);
           },
           title: const Text('System'),
         ),
@@ -24,8 +24,8 @@ class ThemePickerDialog extends StatelessWidget {
           activeColor: ThemeManager.of(context).themeData.accentColor,
           value: BrightnessPreference.light,
           groupValue: ThemeManager.of(context).brightnessPreference,
-          onChanged: (BrightnessPreference value) {
-            onSelectedTheme(BrightnessPreference.light);
+          onChanged: (_) {
+            onSelectedTheme.call(BrightnessPreference.light);
           },
           title: const Text('Light'),
         ),
@@ -33,8 +33,8 @@ class ThemePickerDialog extends StatelessWidget {
           activeColor: ThemeManager.of(context).themeData.accentColor,
           value: BrightnessPreference.dark,
           groupValue: ThemeManager.of(context).brightnessPreference,
-          onChanged: (BrightnessPreference value) {
-            onSelectedTheme(BrightnessPreference.dark);
+          onChanged: (_) {
+            onSelectedTheme.call(BrightnessPreference.dark);
           },
           title: const Text('Dark'),
         ),

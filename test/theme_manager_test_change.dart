@@ -11,34 +11,34 @@ void main() {
   testWidgets('change brightness', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
 
-    MaterialApp app = find.byType(MaterialApp).evaluate().first.widget;
+    MaterialApp app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
 
-    expect(app.theme.brightness, equals(Brightness.dark));
+    expect(app.theme?.brightness, equals(Brightness.dark));
 
     await tester.tap(find.byKey(lightButtonKey));
     await tester.pumpAndSettle();
 
-    app = find.byType(MaterialApp).evaluate().first.widget;
-    expect(app.theme.brightness, equals(Brightness.light));
+    app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    expect(app.theme?.brightness, equals(Brightness.light));
 
     await tester.tap(find.byKey(darkButtonKey));
     await tester.pumpAndSettle();
 
-    app = find.byType(MaterialApp).evaluate().first.widget;
-    expect(app.theme.brightness, equals(Brightness.dark));
+    app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    expect(app.theme?.brightness, equals(Brightness.dark));
 
     await tester.tap(find.byKey(systemButtonKey));
     await tester.pumpAndSettle();
 
-    app = find.byType(MaterialApp).evaluate().first.widget;
+    app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
     // system theme for tests is Brightness.Light
-    expect(app.theme.brightness, equals(Brightness.light));
+    expect(app.theme?.brightness, equals(Brightness.light));
 
     await tester.tap(find.byKey(darkButtonKey));
     await tester.pumpAndSettle();
 
-    app = find.byType(MaterialApp).evaluate().first.widget;
-    expect(app.theme.brightness, equals(Brightness.dark));
+    app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    expect(app.theme?.brightness, equals(Brightness.dark));
   });
 }
 
@@ -70,21 +70,24 @@ class ButtonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RaisedButton(
+        ElevatedButton(
+          child: Text('Light'),
           onPressed: () {
             ThemeManager.of(context)
                 .setBrightnessPreference(BrightnessPreference.light);
           },
           key: lightButtonKey,
         ),
-        RaisedButton(
+        ElevatedButton(
+          child: Text('Dark'),
           onPressed: () {
             ThemeManager.of(context)
                 .setBrightnessPreference(BrightnessPreference.dark);
           },
           key: darkButtonKey,
         ),
-        RaisedButton(
+        ElevatedButton(
+          child: Text('System'),
           onPressed: () {
             ThemeManager.of(context)
                 .setBrightnessPreference(BrightnessPreference.system);
