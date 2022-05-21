@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## 1.1.1
+* Improved support Flutter 1.17.1+
+
 ## 1.1.0
 * Null-Safety support.
 
