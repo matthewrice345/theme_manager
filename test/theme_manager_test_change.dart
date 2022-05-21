@@ -11,7 +11,8 @@ void main() {
   testWidgets('change brightness', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
 
-    MaterialApp app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    MaterialApp app =
+        find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
 
     expect(app.theme?.brightness, equals(Brightness.dark));
 
@@ -51,7 +52,6 @@ class MyApp extends StatelessWidget {
         data: (Brightness brightness) {
           return ThemeData(
             primarySwatch: Colors.blue,
-            accentColor: Colors.blueAccent,
             brightness: brightness,
           );
         },

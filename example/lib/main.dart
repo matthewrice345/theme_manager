@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
       defaultBrightnessPreference: BrightnessPreference.system,
       data: (Brightness brightness) => ThemeData(
         primarySwatch: Colors.blue,
-        accentColor: Colors.lightBlue,
         brightness: brightness,
       ),
       loadBrightnessOnStart: true,

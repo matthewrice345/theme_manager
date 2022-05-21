@@ -42,7 +42,8 @@ class ThemeManager extends StatefulWidget {
   ThemeManagerState createState() => ThemeManagerState();
 
   static ThemeManagerState of(BuildContext context) {
-    return context.findAncestorStateOfType<State<ThemeManager>>() as ThemeManagerState;
+    return context.findAncestorStateOfType<State<ThemeManager>>()
+        as ThemeManagerState;
   }
 }
 
@@ -176,7 +177,7 @@ class ThemeManagerState extends State<ThemeManager> {
     } else if (preference == BrightnessPreference.light) {
       return Brightness.light;
     } else {
-      return WidgetsBinding.instance?.window.platformBrightness ?? Brightness.light;
+      return WidgetsBinding.instance.window.platformBrightness;
     }
   }
 

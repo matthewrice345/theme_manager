@@ -10,7 +10,7 @@ A theme manager that supports light, dark, and system default themes. State is r
 Add `theme_manager` to your project.
 ```
   dependencies:
-    theme_manager: ^1.0.4
+    theme_manager: ^1.1.1
 ```
 
 run `flutter packages get` and import `theme_manager`
