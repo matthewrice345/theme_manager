@@ -74,22 +74,25 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: showThemePicker,
-        child: const Icon(Icons.color_lens, color: Colors.white),
-      ),
-    );
-  }
-
-  void showThemePicker() {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return ThemePickerDialog(
-          onSelectedTheme: (BrightnessPreference preference) {
+        onPressed: () {
+          ThemePickerDialog.show(context, (preference) {
             ThemeManager.of(context).setBrightness(preference);
+          });
+        },
+        child: Builder(
+          builder: (context) {
+            final brightness = ThemeManager.of(context).brightnessPreference;
+            switch (brightness) {
+              case BrightnessPreference.light:
+                return const Icon(Icons.wb_sunny);
+              case BrightnessPreference.dark:
+                return const Icon(Icons.brightness_3);
+              default:
+                return const Icon(Icons.brightness_auto);
+            }
           },
-        );
-      },
+        ),
+      ),
     );
   }
 }

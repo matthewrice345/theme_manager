@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:theme_manager/enums.dart';
 import 'package:theme_manager/theme_manager_widget.dart';
 
-class ThemePickerDialog extends StatelessWidget {
-  const ThemePickerDialog({super.key, required this.onSelectedTheme});
+typedef OnThemeSelected = void Function(BrightnessPreference preference);
 
-  final ValueChanged<BrightnessPreference> onSelectedTheme;
+class ThemePickerDialog extends StatelessWidget {
+  const ThemePickerDialog({super.key, required this.onThemeSelected});
+
+  static Future<void> show(
+      BuildContext context, OnThemeSelected onThemeSelected) {
+    return showDialog<void>(
+        context: context,
+        builder: (context) => ThemePickerDialog(
+              onThemeSelected: onThemeSelected,
+            ));
+  }
+
+  final OnThemeSelected onThemeSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +28,7 @@ class ThemePickerDialog extends StatelessWidget {
           value: BrightnessPreference.system,
           groupValue: ThemeManager.of(context).brightnessPreference,
           onChanged: (_) {
-            onSelectedTheme.call(BrightnessPreference.system);
+            onThemeSelected.call(BrightnessPreference.system);
           },
           title: const Text('System'),
         ),
@@ -26,7 +37,7 @@ class ThemePickerDialog extends StatelessWidget {
           value: BrightnessPreference.light,
           groupValue: ThemeManager.of(context).brightnessPreference,
           onChanged: (_) {
-            onSelectedTheme.call(BrightnessPreference.light);
+            onThemeSelected.call(BrightnessPreference.light);
           },
           title: const Text('Light'),
         ),
@@ -35,7 +46,7 @@ class ThemePickerDialog extends StatelessWidget {
           value: BrightnessPreference.dark,
           groupValue: ThemeManager.of(context).brightnessPreference,
           onChanged: (_) {
-            onSelectedTheme.call(BrightnessPreference.dark);
+            onThemeSelected.call(BrightnessPreference.dark);
           },
           title: const Text('Dark'),
         ),
