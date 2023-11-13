@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## 2.0.0
+* The API has changes slightly. Fixes a bug with the default theme not being applied correctly.
+* Updates the API to be easier to use.
+
 ## 1.1.1
 * Improved support Flutter 1.17.1+
 
