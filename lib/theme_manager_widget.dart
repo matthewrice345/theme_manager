@@ -71,10 +71,12 @@ class ThemeManagerState extends State<ThemeManager> {
 
   /// Initializes the variables
   /// Loads the brightness depending on the `loadBrightnessOnStart` value
-  Future<void> _initVariables() async {
-    setThemeData(widget.data(_brightnessSharedPreference.brightness(context)));
-    _brightnessSharedPreference =
-        await Preferences.getBrightness(widget.defaultBrightnessPreference);
+  void _initVariables() {
+    Preferences.getBrightness(widget.defaultBrightnessPreference).then((value) {
+      _brightnessSharedPreference = value;
+      final brightness = _brightnessSharedPreference.brightness(context);
+      setThemeData(widget.data(brightness));
+    });
   }
 
   /// Toggles the brightness from dark to light

@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## 2.0.1
+* Fixes a bug with initialization of the saved theme preference.
+
 ## 2.0.0
 * The API has changes slightly. Fixes a bug with the default theme not being applied correctly.
 * Updates the API to be easier to use.
