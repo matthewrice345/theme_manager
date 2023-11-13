@@ -9,7 +9,7 @@ GlobalKey<ThemeManagerState> themeManagerKey = GlobalKey<ThemeManagerState>();
 
 void main() {
   testWidgets('change brightness', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(const MyApp());
 
     MaterialApp app =
         find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
@@ -44,6 +44,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ThemeManager(
@@ -59,40 +61,39 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Theme Manager Demo',
             theme: theme,
-            home: ButtonPage(),
+            home: const ButtonPage(),
           );
         });
   }
 }
 
 class ButtonPage extends StatelessWidget {
+  const ButtonPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ElevatedButton(
-          child: Text('Light'),
           onPressed: () {
-            ThemeManager.of(context)
-                .setBrightnessPreference(BrightnessPreference.light);
+            ThemeManager.of(context).setBrightness(BrightnessPreference.light);
           },
           key: lightButtonKey,
+          child: const Text('Light'),
         ),
         ElevatedButton(
-          child: Text('Dark'),
           onPressed: () {
-            ThemeManager.of(context)
-                .setBrightnessPreference(BrightnessPreference.dark);
+            ThemeManager.of(context).setBrightness(BrightnessPreference.dark);
           },
           key: darkButtonKey,
+          child: const Text('Dark'),
         ),
         ElevatedButton(
-          child: Text('System'),
           onPressed: () {
-            ThemeManager.of(context)
-                .setBrightnessPreference(BrightnessPreference.system);
+            ThemeManager.of(context).setBrightness(BrightnessPreference.system);
           },
           key: systemButtonKey,
+          child: const Text('System'),
         ),
       ],
     );

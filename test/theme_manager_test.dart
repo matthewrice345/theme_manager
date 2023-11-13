@@ -10,7 +10,7 @@ GlobalKey<ThemeManagerState> themeManagerKey = GlobalKey<ThemeManagerState>();
 
 void main() {
   testWidgets('test finds state', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(const MyApp());
 
     expect(state, equals(null));
 
@@ -22,6 +22,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ThemeManager(
@@ -37,21 +39,23 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Theme Manager Demo',
             theme: theme,
-            home: MyHomePage(),
+            home: const MyHomePage(),
           );
         });
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(''),
       onPressed: () {
         state = ThemeManager.of(context);
       },
       key: key,
+      child: const Text(''),
     );
   }
 }

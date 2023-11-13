@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:theme_manager/change_theme_widget.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // Required
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ThemeManager(
       /// WidgetsBinding.instance.window.platformBrightness is used because a
       /// Material BuildContext will not be available outside of the Material app
-      defaultBrightnessPreference: BrightnessPreference.system,
+      defaultBrightnessPreference: BrightnessPreference.light,
       data: (Brightness brightness) => ThemeData(
         primarySwatch: Colors.blue,
         brightness: brightness,
       ),
-      loadBrightnessOnStart: true,
       themedWidgetBuilder: (BuildContext context, ThemeData theme) {
         return MaterialApp(
           title: 'Theme Manager Demo',
           theme: theme,
-          home: MyHomePage(),
+          home: const MyHomePage(),
         );
       },
     );
@@ -31,8 +31,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -51,20 +53,20 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () => ThemeManager.of(context)
-                    .setBrightnessPreference(BrightnessPreference.system),
+                    .setBrightness(BrightnessPreference.system),
                 child: const Text('System'),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 child: ElevatedButton(
                   onPressed: () => ThemeManager.of(context)
-                      .setBrightnessPreference(BrightnessPreference.light),
+                      .setBrightness(BrightnessPreference.light),
                   child: const Text('Light'),
                 ),
               ),
               ElevatedButton(
                 onPressed: () => ThemeManager.of(context)
-                    .setBrightnessPreference(BrightnessPreference.dark),
+                    .setBrightness(BrightnessPreference.dark),
                 child: const Text('Dark'),
               ),
             ],
@@ -84,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return ThemePickerDialog(
           onSelectedTheme: (BrightnessPreference preference) {
-            ThemeManager.of(context).setBrightnessPreference(preference);
+            ThemeManager.of(context).setBrightness(preference);
           },
         );
       },

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:theme_manager/theme_manager.dart';
+import 'package:theme_manager/enums.dart';
+import 'package:theme_manager/theme_manager_widget.dart';
 
 class ThemePickerDialog extends StatelessWidget {
-  const ThemePickerDialog({Key? key, required this.onSelectedTheme})
-      : super(key: key);
+  const ThemePickerDialog({super.key, required this.onSelectedTheme});
 
   final ValueChanged<BrightnessPreference> onSelectedTheme;
 
