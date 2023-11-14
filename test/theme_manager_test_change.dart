@@ -11,7 +11,8 @@ void main() {
   testWidgets('change brightness', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
-    MaterialApp app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    MaterialApp app =
+        find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
 
     expect(app.theme?.brightness, equals(Brightness.dark));
 

@@ -38,10 +38,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-    final brightnessPreference = ThemeManager.of(context).state.brightnessPreference;
+    final brightnessPreference =
+        ThemeManager.of(context).state.brightnessPreference;
 
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: brightnessPreference.isSystem ? Colors.red : Colors.blue,
+                  backgroundColor:
+                      brightnessPreference.isSystem ? Colors.red : Colors.blue,
                 ),
                 onPressed: () => ThemeManager.of(context)
                     .setBrightness(BrightnessPreference.system),
@@ -65,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 12),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: brightnessPreference.isSystem ? Colors.red : Colors.blue,
+                  backgroundColor:
+                      brightnessPreference.isSystem ? Colors.red : Colors.blue,
                 ),
                 onPressed: () => ThemeManager.of(context)
                     .setBrightness(BrightnessPreference.light),
@@ -74,7 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 12),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: brightnessPreference.isSystem ? Colors.red : Colors.blue,
+                  backgroundColor:
+                      brightnessPreference.isSystem ? Colors.red : Colors.blue,
                 ),
                 onPressed: () => ThemeManager.of(context)
                     .setBrightness(BrightnessPreference.dark),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:theme_manager/theme_manager_widget.dart';
 import 'package:theme_manager/theme_state.dart';
 
-typedef ThemeBuilderWidget = Widget Function(BuildContext context, ThemeState state);
+typedef ThemeBuilderWidget = Widget Function(
+    BuildContext context, ThemeState state);
 
 /// A widget that rebuilds when the theme changes. Sometimes you need to rebuild
 /// part of the widget tree that may not get updated via the [ThemeManagerWidget].

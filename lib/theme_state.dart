@@ -10,9 +10,9 @@ class ThemeState extends Equatable {
 
   @override
   List<Object?> get props => [
-    themeData,
-    brightnessPreference,
-  ];
+        themeData,
+        brightnessPreference,
+      ];
 
   @override
   String toString() {

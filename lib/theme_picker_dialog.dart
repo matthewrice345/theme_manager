@@ -7,7 +7,8 @@ typedef OnThemeSelected = void Function(BrightnessPreference preference);
 class ThemePickerDialog extends StatelessWidget {
   const ThemePickerDialog({super.key, required this.onThemeSelected});
 
-  static Future<void> show(BuildContext context, OnThemeSelected onThemeSelected) {
+  static Future<void> show(
+      BuildContext context, OnThemeSelected onThemeSelected) {
     return showDialog<void>(
       context: context,
       builder: (context) => ThemePickerDialog(

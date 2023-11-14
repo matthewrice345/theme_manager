@@ -7,7 +7,8 @@ import 'package:theme_manager/theme_state.dart';
 
 typedef ThemedBuilder = Widget Function(BuildContext context, ThemeState state);
 
-typedef ThemeDataWithBrightnessBuilder = ThemeData Function(Brightness brightness);
+typedef ThemeDataWithBrightnessBuilder = ThemeData Function(
+    Brightness brightness);
 
 class ThemeManager extends StatefulWidget {
   const ThemeManager({
@@ -31,11 +32,13 @@ class ThemeManager extends StatefulWidget {
   ThemeManagerState createState() => ThemeManagerState();
 
   static ThemeManagerState of(BuildContext context) {
-    return context.findAncestorStateOfType<State<ThemeManager>>() as ThemeManagerState;
+    return context.findAncestorStateOfType<State<ThemeManager>>()
+        as ThemeManagerState;
   }
 }
 
-class ThemeManagerState extends State<ThemeManager> with WidgetsBindingObserver {
+class ThemeManagerState extends State<ThemeManager>
+    with WidgetsBindingObserver {
   /// Get the current `ThemeData`
   ThemeState get state => _state;
   late ThemeState _state;
@@ -87,7 +90,8 @@ class ThemeManagerState extends State<ThemeManager> with WidgetsBindingObserver 
 
   /// Initializes the variables
   Future<void> _loadBrightness() async {
-    final brightnessPreference = await Preferences.getBrightness(widget.defaultBrightnessPreference);
+    final brightnessPreference =
+        await Preferences.getBrightness(widget.defaultBrightnessPreference);
     setThemeData(brightnessPreference);
   }
 
