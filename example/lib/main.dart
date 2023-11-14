@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         brightness: brightness,
       ),
-      themedWidgetBuilder: (BuildContext context, ThemeData theme) {
+      themedBuilder: (BuildContext context, ThemeState state) {
         return MaterialApp(
           title: 'Theme Manager Demo',
-          theme: theme,
+          theme: state.themeData,
           home: const MyHomePage(),
         );
       },
@@ -38,8 +38,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   Widget build(BuildContext context) {
+    final brightnessPreference = ThemeManager.of(context).state.brightnessPreference;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Theme Manager'),
@@ -52,19 +55,27 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: brightnessPreference.isSystem ? Colors.red : Colors.blue,
+                ),
                 onPressed: () => ThemeManager.of(context)
                     .setBrightness(BrightnessPreference.system),
                 child: const Text('System'),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: ElevatedButton(
-                  onPressed: () => ThemeManager.of(context)
-                      .setBrightness(BrightnessPreference.light),
-                  child: const Text('Light'),
-                ),
-              ),
+              const SizedBox(height: 12),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: brightnessPreference.isSystem ? Colors.red : Colors.blue,
+                ),
+                onPressed: () => ThemeManager.of(context)
+                    .setBrightness(BrightnessPreference.light),
+                child: const Text('Light'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: brightnessPreference.isSystem ? Colors.red : Colors.blue,
+                ),
                 onPressed: () => ThemeManager.of(context)
                     .setBrightness(BrightnessPreference.dark),
                 child: const Text('Dark'),
@@ -79,10 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ThemeManager.of(context).setBrightness(preference);
           });
         },
-        child: Builder(
-          builder: (context) {
-            final brightness = ThemeManager.of(context).brightnessPreference;
-            switch (brightness) {
+        child: ThemeBuilder(
+          builder: (context, themeState) {
+            switch (themeState.brightnessPreference) {
               case BrightnessPreference.light:
                 return const Icon(Icons.wb_sunny);
               case BrightnessPreference.dark:

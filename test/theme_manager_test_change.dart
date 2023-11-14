@@ -11,8 +11,7 @@ void main() {
   testWidgets('change brightness', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
-    MaterialApp app =
-        find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    MaterialApp app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
 
     expect(app.theme?.brightness, equals(Brightness.dark));
 
@@ -49,21 +48,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeManager(
-        key: themeManagerKey,
-        defaultBrightnessPreference: BrightnessPreference.dark,
-        data: (Brightness brightness) {
-          return ThemeData(
-            primarySwatch: Colors.blue,
-            brightness: brightness,
-          );
-        },
-        themedWidgetBuilder: (BuildContext context, ThemeData theme) {
-          return MaterialApp(
-            title: 'Theme Manager Demo',
-            theme: theme,
-            home: const ButtonPage(),
-          );
-        });
+      key: themeManagerKey,
+      defaultBrightnessPreference: BrightnessPreference.dark,
+      data: (Brightness brightness) {
+        return ThemeData(
+          primarySwatch: Colors.blue,
+          brightness: brightness,
+        );
+      },
+      themedBuilder: (BuildContext context, ThemeState data) {
+        return MaterialApp(
+          title: 'Theme Manager Demo',
+          theme: data.themeData,
+          home: const ButtonPage(),
+        );
+      },
+    );
   }
 }
 

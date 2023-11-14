@@ -21,4 +21,8 @@ enum BrightnessPreference {
         }
     }
   }
+
+  bool get isSystem => this == BrightnessPreference.system;
+  bool get isDark => this == BrightnessPreference.dark;
+  bool get isLight => this == BrightnessPreference.light;
 }

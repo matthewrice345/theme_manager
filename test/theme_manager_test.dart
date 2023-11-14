@@ -27,21 +27,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeManager(
-        key: themeManagerKey,
-        defaultBrightnessPreference: BrightnessPreference.light,
-        data: (Brightness brightness) {
-          return ThemeData(
-            primarySwatch: Colors.blue,
-            brightness: brightness,
-          );
-        },
-        themedWidgetBuilder: (BuildContext context, ThemeData theme) {
-          return MaterialApp(
-            title: 'Theme Manager Demo',
-            theme: theme,
-            home: const MyHomePage(),
-          );
-        });
+      key: themeManagerKey,
+      defaultBrightnessPreference: BrightnessPreference.light,
+      data: (Brightness brightness) {
+        return ThemeData(
+          primarySwatch: Colors.blue,
+          brightness: brightness,
+        );
+      },
+      themedBuilder: (BuildContext context, ThemeState data) {
+        return MaterialApp(
+          title: 'Theme Manager Demo',
+          theme: data.themeData,
+          home: const MyHomePage(),
+        );
+      },
+    );
   }
 }
 

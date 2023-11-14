@@ -20,7 +20,7 @@ import 'package:theme_manager/theme_manager.dart';
 
 A dialog is provided that can switch between themes. 
 ```dart
-import 'package:theme_manager/change_theme_widget.dart';
+import 'package:theme_manager/theme_picker_dialog.dart';
 ```
 
 ## How to use

@@ -3,114 +3,123 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:theme_manager/enums.dart';
 import 'package:theme_manager/preferences.dart';
+import 'package:theme_manager/theme_state.dart';
 
-typedef ThemedWidgetBuilder = Widget Function(
-    BuildContext context, ThemeData data);
+typedef ThemedBuilder = Widget Function(BuildContext context, ThemeState state);
 
-typedef ThemeDataWithBrightnessBuilder = ThemeData Function(
-    Brightness brightness);
+typedef ThemeDataWithBrightnessBuilder = ThemeData Function(Brightness brightness);
 
 class ThemeManager extends StatefulWidget {
   const ThemeManager({
     super.key,
     required this.data,
-    required this.themedWidgetBuilder,
+    required this.themedBuilder,
     this.defaultBrightnessPreference = BrightnessPreference.system,
   });
 
   /// Builder that gets called when the brightness or theme changes
-  final ThemedWidgetBuilder themedWidgetBuilder;
+  final ThemedBuilder themedBuilder;
 
-  /// Callback that returns the latest brightness
+  /// Callback that returns the updated theme brightness
   final ThemeDataWithBrightnessBuilder data;
 
   /// The default brightness preference on start
-  ///
-  /// Defaults to `BrightnessPreference.system`
+  /// Defaults to `BrightnessPreference.system` when not set.
   final BrightnessPreference defaultBrightnessPreference;
 
   @override
   ThemeManagerState createState() => ThemeManagerState();
 
   static ThemeManagerState of(BuildContext context) {
-    return context.findAncestorStateOfType<State<ThemeManager>>()
-        as ThemeManagerState;
+    return context.findAncestorStateOfType<State<ThemeManager>>() as ThemeManagerState;
   }
 }
 
-class ThemeManagerState extends State<ThemeManager> {
+class ThemeManagerState extends State<ThemeManager> with WidgetsBindingObserver {
   /// Get the current `ThemeData`
-  ThemeData get themeData => _themeData;
-  late ThemeData _themeData;
+  ThemeState get state => _state;
+  late ThemeState _state;
 
-  /// Get the current `BrightnessPreference`
-  BrightnessPreference get brightnessPreference => _brightnessSharedPreference;
-  late BrightnessPreference _brightnessSharedPreference;
+  ValueNotifier<ThemeState> get themeStateNotifier => _themeStateNotifier;
+  late ValueNotifier<ThemeState> _themeStateNotifier;
 
   @override
   void initState() {
     super.initState();
-    _brightnessSharedPreference = widget.defaultBrightnessPreference;
-    _themeData = widget.data(_brightnessSharedPreference.brightness(context));
-    _initVariables();
+    _state = ThemeState(
+      widget.data(widget.defaultBrightnessPreference.brightness(context)),
+      widget.defaultBrightnessPreference,
+    );
+    _themeStateNotifier = ValueNotifier<ThemeState>(state);
+    _loadBrightness();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final brightness = _brightnessSharedPreference.brightness(context);
-    _themeData = widget.data(brightness);
+    _state = ThemeState(
+      widget.data(state.brightnessPreference.brightness(context)),
+      state.brightnessPreference,
+    );
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void didUpdateWidget(ThemeManager oldWidget) {
     super.didUpdateWidget(oldWidget);
-    final brightness = _brightnessSharedPreference.brightness(context);
-    _themeData = widget.data(brightness);
+    _state = ThemeState(
+      widget.data(state.brightnessPreference.brightness(context)),
+      state.brightnessPreference,
+    );
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    super.didChangePlatformBrightness();
+    _loadBrightness();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   /// Initializes the variables
-  /// Loads the brightness depending on the `loadBrightnessOnStart` value
-  void _initVariables() {
-    Preferences.getBrightness(widget.defaultBrightnessPreference).then((value) {
-      _brightnessSharedPreference = value;
-      final brightness = _brightnessSharedPreference.brightness(context);
-      setThemeData(widget.data(brightness));
-    });
+  Future<void> _loadBrightness() async {
+    final brightnessPreference = await Preferences.getBrightness(widget.defaultBrightnessPreference);
+    setThemeData(brightnessPreference);
   }
 
-  /// Toggles the brightness from dark to light
+  /// Sets the [BrightnessPreference] and saves it to shared preferences
   Future<void> setBrightness(BrightnessPreference brightnessPreference) async {
-    _brightnessSharedPreference = brightnessPreference;
-    final brightness = _brightnessSharedPreference.brightness(context);
-    setThemeData(widget.data(brightness));
     await Preferences.saveBrightness(brightnessPreference);
+    setThemeData(brightnessPreference);
   }
 
   /// Gets the stored shared preference for the brightness preference
   Future<BrightnessPreference> getBrightness() {
-    return Preferences.getBrightness(brightnessPreference);
+    return Preferences.getBrightness(state.brightnessPreference);
   }
 
   /// Clears the stored shared preference for the brightness preference
   Future<void> clearBrightnessPreference() async {
     await Preferences.clearBrightness();
-    _brightnessSharedPreference = widget.defaultBrightnessPreference;
-    // ignore: use_build_context_synchronously
-    final brightness = _brightnessSharedPreference.brightness(context);
-    setThemeData(widget.data(brightness));
+    setThemeData(widget.defaultBrightnessPreference);
   }
 
   /// Changes the theme using the provided `ThemeData`
-  void setThemeData(ThemeData data) {
-    _themeData = data;
+  void setThemeData(BrightnessPreference brightnessPreference) {
+    final brightness = brightnessPreference.brightness(context);
+    _state = ThemeState(widget.data.call(brightness), brightnessPreference);
     if (mounted) {
       setState(() {});
     }
+    _themeStateNotifier.value = state;
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.themedWidgetBuilder(context, _themeData);
+    return widget.themedBuilder(context, state);
   }
 }
