@@ -1,6 +1,6 @@
 name: theme_manager
 description: A theme manager for light, dark, and system themes. Change the theme dynamically and the selected theme will be persisted.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/matthewrice345/theme_manager
 
 environment:
