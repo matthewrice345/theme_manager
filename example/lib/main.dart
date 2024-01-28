@@ -19,6 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         brightness: brightness,
       ),
+      themeChangeListener: (ThemeState state) {
+        debugPrint('ThemeState: ${state.brightnessPreference}');
+        // Could post updates to a state manager here.
+      },
       themedBuilder: (BuildContext context, ThemeState state) {
         return MaterialApp(
           title: 'Theme Manager Demo',

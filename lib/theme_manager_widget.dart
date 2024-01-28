@@ -6,6 +6,7 @@ import 'package:theme_manager/preferences.dart';
 import 'package:theme_manager/theme_state.dart';
 
 typedef ThemedBuilder = Widget Function(BuildContext context, ThemeState state);
+typedef ThemeListener = void Function(ThemeState state);
 
 typedef ThemeDataWithBrightnessBuilder = ThemeData Function(
     Brightness brightness);
@@ -15,11 +16,14 @@ class ThemeManager extends StatefulWidget {
     super.key,
     required this.data,
     required this.themedBuilder,
+    this.themeChangeListener,
     this.defaultBrightnessPreference = BrightnessPreference.system,
   });
 
   /// Builder that gets called when the brightness or theme changes
   final ThemedBuilder themedBuilder;
+
+  final ThemeListener? themeChangeListener;
 
   /// Callback that returns the updated theme brightness
   final ThemeDataWithBrightnessBuilder data;
@@ -120,6 +124,7 @@ class ThemeManagerState extends State<ThemeManager>
       setState(() {});
     }
     _themeStateNotifier.value = state;
+    widget.themeChangeListener?.call(state);
   }
 
   @override
