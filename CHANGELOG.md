@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## 2.0.3
+* Adds a ThemeListener to listen for theme changes. A great way to update state managers.
+
 ## 2.0.2
 * Adds a ThemeBuilder widget for places that may not get updated such as inside a Builder.
 * Small api changes related to other 2.0.x changes.
