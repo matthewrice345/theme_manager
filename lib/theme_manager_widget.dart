@@ -55,7 +55,9 @@ class ThemeManagerState extends State<ThemeManager>
     super.initState();
     // The context may not be available quite yet. This initializes the state until then.
     _state = ThemeState(
-      widget.data(widget.defaultBrightnessPreference.isDark ? Brightness.dark : Brightness.light),
+      widget.data(widget.defaultBrightnessPreference.isDark
+          ? Brightness.dark
+          : Brightness.light),
       widget.defaultBrightnessPreference,
     );
 
