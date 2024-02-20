@@ -53,12 +53,20 @@ class ThemeManagerState extends State<ThemeManager>
   @override
   void initState() {
     super.initState();
+    // The context may not be available quite yet. This initializes the state until then.
     _state = ThemeState(
-      widget.data(widget.defaultBrightnessPreference.brightness(context)),
+      widget.data(widget.defaultBrightnessPreference.isDark ? Brightness.dark : Brightness.light),
       widget.defaultBrightnessPreference,
     );
-    _themeStateNotifier = ValueNotifier<ThemeState>(state);
-    _loadBrightness();
+
+    Future(() {
+      _state = ThemeState(
+        widget.data(widget.defaultBrightnessPreference.brightness(context)),
+        widget.defaultBrightnessPreference,
+      );
+      _themeStateNotifier = ValueNotifier<ThemeState>(state);
+      _loadBrightness();
+    });
   }
 
   @override
@@ -68,6 +76,7 @@ class ThemeManagerState extends State<ThemeManager>
       widget.data(state.brightnessPreference.brightness(context)),
       state.brightnessPreference,
     );
+    _themeStateNotifier = ValueNotifier<ThemeState>(state);
     WidgetsBinding.instance.addObserver(this);
   }
 

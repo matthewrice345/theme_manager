@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## 2.0.4
+* Fixes an issue where the BuildContext is not ready.
+
 ## 2.0.3
 * Adds a ThemeListener to listen for theme changes. A great way to update state managers.
 
